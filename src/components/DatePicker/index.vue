@@ -597,6 +597,10 @@ export default {
       this.reRender();
     },
     isOpen(value) {
+      const eventName = value ? "opened" : "closed";
+
+      this.$emit(eventName);
+
       if (this.screenSize !== "desktop" && !this.alwaysVisible) {
         const body = document.querySelector("body");
 
@@ -606,12 +610,12 @@ export default {
           this.$nextTick(() => {
             if (this.$refs) {
               const { swiperWrapper } = this.$refs;
-              const monthHeihgt = this.$refs.datepickerMonth[0].offsetHeight;
+              const monthHeight = this.$refs.datepickerMonth[0].offsetHeight;
               const currentSelectionIndex = this.checkOut
                 ? this.getMonthDiff(new Date(), this.checkOut)
                 : 0;
 
-              swiperWrapper.scrollTop = currentSelectionIndex * monthHeihgt;
+              swiperWrapper.scrollTop = currentSelectionIndex * monthHeight;
             }
           });
         } else {

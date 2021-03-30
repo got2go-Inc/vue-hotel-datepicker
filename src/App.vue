@@ -36,6 +36,23 @@
       </div>
       <div class="box">
         <h3>
+          Opened / closed emits
+        </h3>
+        <p>{{ isOpenText }}</p>
+        <DatePicker
+          ref="DatePicker"
+          clickOutsideElementId="clickOutsideElement"
+          :disabledDates="[]"
+          :format="dateFormat"
+          :lastDateAvailable="lastDateAvailable"
+          :minNights="minNights"
+          :i18n="frFR"
+          @opened="isOpenText = 'datepicker opened'"
+          @closed="isOpenText = 'datepicker closed'"
+        />
+      </div>
+      <div class="box">
+        <h3>
           Open DatePicker outside
           <button id="clickOutsideElement" @click="toggleDatePickerOutside">
             Open
@@ -702,6 +719,7 @@ export default {
           }
         }
       ],
+      isOpenText: "",
       newCheckInDate: null,
       newCheckOutDate: null,
       minNights: 3

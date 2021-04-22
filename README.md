@@ -1,5 +1,5 @@
-# Release 1.0.1
-https://github.com/joffreyBerrier/vue-hotel-datepicker/releases/tag/1.0.1
+# Release 1.0.2
+https://github.com/joffreyBerrier/vue-hotel-datepicker/releases/tag/1.0.2
 
 # vue-hotel-datepicker@2
 
@@ -89,6 +89,8 @@ https://github.com/joffreyBerrier/vue-hotel-datepicker/projects/1?fullscreen=tru
 * Add a `countOfTotalMonthByDefault`props for generate x month on a created
 * Remove duplicate useless `<baseInput />`
 * Refacto the style of `<baseInput />`
+* Create / refacto the function for create month and put on a mounted part not created for get the correct device
+* Add a v-if="months.length" around the v-for
 ------------
 
 ## What I will improve

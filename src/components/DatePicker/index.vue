@@ -794,7 +794,6 @@ export default {
         .includes(formatDate);
 
       if (
-        this.isDesktop &&
         !this.dayIsDisabled(day.date) &&
         day.belongsToThisMonth &&
         !disableDays

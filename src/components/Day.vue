@@ -280,7 +280,6 @@ export default {
 
       // Current Day
       if (
-        this.isDesktop &&
         !this.isDisabled &&
         this.date === this.hoveringDate &&
         this.checkIn !== null &&
@@ -325,7 +324,6 @@ export default {
         }
 
         if (
-          this.isDesktop &&
           Object.keys(this.checkInPeriod).length > 0 &&
           this.checkInPeriod.periodType.includes("weekly") &&
           this.hoveringDate &&
@@ -350,7 +348,6 @@ export default {
             return "datepicker__month-day--selected afterMinimumDurationValidDay";
           }
         } else if (
-          this.isDesktop &&
           Object.keys(this.checkInPeriod).length > 0 &&
           this.checkInPeriod.periodType === "nightly" &&
           this.hoveringDate &&
@@ -365,7 +362,6 @@ export default {
         }
 
         if (
-          this.isDesktop &&
           this.hoveringPeriod.periodType === "nightly" &&
           this.isDateLessOrEquals(this.date, this.hoveringDate)
         ) {

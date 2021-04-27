@@ -1,5 +1,5 @@
-# Release 1.0.7
-https://github.com/joffreyBerrier/vue-hotel-datepicker/releases/tag/1.0.7
+# Release 1.0.8
+https://github.com/joffreyBerrier/vue-hotel-datepicker/releases/tag/1.0.8
 
 # vue-hotel-datepicker@2
 
@@ -91,6 +91,8 @@ https://github.com/joffreyBerrier/vue-hotel-datepicker/projects/1?fullscreen=tru
 * Refacto the style of `<baseInput />`
 * Create / refacto the function for create month and put on a mounted part not created for get the correct device
 * Add a v-if="months.length" around the v-for
+* Refacto the tooltip
+* Disable hover on mobile
 ------------
 
 ## What I will improve

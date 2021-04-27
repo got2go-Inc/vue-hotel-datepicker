@@ -393,8 +393,10 @@ $extra-small-screen: '(max-width: 23em)';
 
     &--valid:hover,
     &--allowed-checkout:hover {
-      background-color: $primary-color;
-      color: $colorValidHoverDate;
+      @include device($desktop) {
+        background-color: $primary-color;
+        color: $colorValidHoverDate;
+      }
     }
 
     &--disabled {

@@ -1303,8 +1303,6 @@ export default {
       }
     },
     renderNextMonth() {
-      this.$emit("renderNextMonth");
-
       const countOfDesktopMonth = this.isDesktop
         ? this.countOfDesktopMonth
         : this.countOfMobileMonth;
@@ -1338,6 +1336,8 @@ export default {
 
       this.createMonth(this.getNextMonth(firstDayOfLastMonth.date));
       this.activeMonthIndex++;
+
+      this.$emit("renderNextMonth");
     },
     setCheckIn(date) {
       this.checkIn = date;

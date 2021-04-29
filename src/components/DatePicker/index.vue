@@ -500,7 +500,7 @@ export default {
     },
     customTooltipMessage() {
       let tooltip = "";
-      const currentDate = this.hoveringDate;
+      const currentDate = this.hoveringDate || this.checkIn;
 
       if (currentDate && (this.customTooltip || this.customTooltipHalfday)) {
         if (this.customTooltip && this.customTooltipHalfday) {
@@ -831,19 +831,34 @@ export default {
       return false;
     },
     mouseEnterDay(day) {
-      const formatDate = this.dateFormater(day.date);
-      const halfDays = Object.keys(this.checkIncheckOutHalfDay);
-      const disableDays = this.disabledDates
-        .filter(disableDate => !halfDays.includes(disableDate))
-        .includes(formatDate);
+      if (day.belongsToThisMonth) {
+        const formatDate = this.dateFormater(day.date);
+        const halfDays = Object.keys(this.checkIncheckOutHalfDay);
+        const disableDays = this.disabledDates
+          .filter(disableDate => !halfDays.includes(disableDate))
+          .includes(formatDate);
 
-      if (
-        !this.dayIsDisabled(day.date) &&
-        day.belongsToThisMonth &&
-        !disableDays
-      ) {
-        this.setCustomTooltipOnHover(day);
+        if (!this.dayIsDisabled(day.date) && !disableDays && this.isDesktop) {
+          this.setCustomTooltipOnHover(day);
+        }
       }
+    },
+    setCustomTooltipOnHover(day) {
+      const { date } = day;
+
+      this.hoveringDate = date;
+      if (this.showCustomTooltip) this.showCustomTooltip = false;
+
+      this.setCurrentPeriod(date, "hover");
+
+      if (Object.keys(this.hoveringPeriod).length > 0) {
+        // Create tooltip
+        this.createTooltip(date);
+      } else {
+        this.hoveringPeriod = {};
+      }
+
+      if (this.halfDay) this.createHalfDayTooltip(day.date);
     },
     setCurrentPeriod(date, eventType) {
       let currentPeriod = {};
@@ -892,39 +907,23 @@ export default {
         };
       }
     },
-    setCustomTooltipOnHover(day) {
-      const { date } = day;
+    createTooltip(date) {
+      if (this.hoveringPeriod.periodType === "weekly_by_saturday") {
+        const dayCode = 6;
+        const text = this.i18n.tooltip.saturdayToSaturday;
 
-      this.hoveringDate = date;
-      if (this.showCustomTooltip) this.showCustomTooltip = false;
+        this.createTooltipWeekly(date, dayCode, text);
+      } else if (this.hoveringPeriod.periodType === "weekly_by_sunday") {
+        const dayCode = 0;
+        const text = this.i18n.tooltip.sundayToSunday;
 
-      this.setCurrentPeriod(date, "hover");
-
-      if (Object.keys(this.hoveringPeriod).length > 0) {
-        // Create tooltip
-        if (this.hoveringPeriod.periodType === "weekly_by_saturday") {
-          const dayCode = 6;
-          const text = this.i18n.tooltip.saturdayToSaturday;
-
-          this.showTooltipWeeklyOnHover(date, dayCode, text);
-        } else if (this.hoveringPeriod.periodType === "weekly_by_sunday") {
-          const dayCode = 0;
-          const text = this.i18n.tooltip.sundayToSunday;
-
-          this.showTooltipWeeklyOnHover(date, dayCode, text);
-        } else if (this.hoveringPeriod.periodType === "nightly") {
-          this.showTooltipNightlyOnHover(date);
-        } else {
-          // Clean tooltip
-          this.showCustomTooltip = false;
-          this.customTooltip = "";
-        }
+        this.createTooltipWeekly(date, dayCode, text);
+      } else if (this.hoveringPeriod.periodType === "nightly") {
+        this.createTooltipNightly(date);
       } else {
-        this.hoveringPeriod = {};
-      }
-
-      if (this.halfDay) {
-        this.createHalfDayTooltip(day.date);
+        // Clean tooltip
+        this.showCustomTooltip = false;
+        this.customTooltip = "";
       }
     },
     handleDayClick(event, date, formatDate, resetCheckin) {
@@ -969,8 +968,12 @@ export default {
 
       if (this.checkIn && !this.checkOut) {
         this.setCurrentPeriod(date, "click");
+
+        // Create tooltip + half day tooltip
+        this.createTooltip(date);
+        if (this.halfDay) this.createHalfDayTooltip(date);
+
         this.checkInPeriod = this.hoveringPeriod;
-        this.setCustomTooltipOnClick();
       }
 
       this.nextDisabledDate = nextDisabledDate;
@@ -999,20 +1002,7 @@ export default {
 
       return closest;
     },
-    setCustomTooltipOnClick() {
-      if (
-        Object.keys(this.checkInPeriod).length > 0 &&
-        this.checkInPeriod.periodType.includes("weekly")
-      ) {
-        const nextValidDate = this.addDays(this.checkIn, this.minNightCount);
-
-        this.checkInPeriod.nextValidDate = nextValidDate;
-        this.showTooltipWeeklyOnClick();
-      } else if (this.checkInPeriod.periodType === "nightly") {
-        this.showTooltipNightlyOnClick();
-      }
-    },
-    showTooltipWeeklyOnHover(date, periodDayType, text) {
+    createTooltipWeekly(date, periodDayType, text) {
       const countDaysBetweenCheckInCurrentDay = this.countDays(
         this.checkIn,
         date
@@ -1107,16 +1097,7 @@ export default {
         this.customTooltip = text;
       }
     },
-    showTooltipWeeklyOnClick() {
-      const night = this.pluralize(this.minNightCount, "week");
-
-      this.showCustomTooltip = true;
-      this.customTooltip = this.completeTrad(
-        this.i18n.tooltip.minimumRequiredPeriod,
-        { minNightInPeriod: this.minNightCount / 7, night }
-      );
-    },
-    showTooltipNightlyOnHover(date) {
+    createTooltipNightly(date) {
       if (this.checkIn && !this.checkOut) {
         const nextDayValid = this.addDays(this.checkIn, this.minNightCount);
         const isDateAfterMinimumDuration =
@@ -1138,16 +1119,6 @@ export default {
       } else {
         this.customTooltip = "";
       }
-    },
-    showTooltipNightlyOnClick() {
-      const minNightInPeriod = this.hoveringPeriod.minimumDuration;
-      const night = this.pluralize(this.minNightCount);
-
-      this.showCustomTooltip = true;
-      this.customTooltip = this.completeTrad(
-        this.i18n.tooltip.minimumRequiredPeriod,
-        { minNightInPeriod, night }
-      );
     },
     createHalfDayTooltip(date) {
       this.customTooltipHalfday = "";

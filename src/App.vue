@@ -491,8 +491,8 @@ export default {
       bookings: [
         {
           id: "1726359",
-          checkInDate: "2021-08-22",
-          checkOutDate: "2021-08-29",
+          checkInDate: "2021-05-06",
+          checkOutDate: "2021-05-07",
           style: {
             backgroundColor: "#9DC1C9"
           }

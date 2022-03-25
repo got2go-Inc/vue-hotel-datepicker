@@ -6,13 +6,14 @@
       v-if="showTooltip && options.hoveringTooltip"
     />
     <div
+      :data-testid="`day-${formatDate}`"
       @click.prevent.stop="dayClicked($event, date)"
       :class="[
         'datepicker__month-day',
         dayClass,
         checkinCheckoutClass,
         bookingClass,
-        { 'datepicker__month-day--today': isToday }
+        { 'datepicker__month-day--today': isToday },
       ]"
       :tabindex="tabIndex"
       ref="day"
@@ -40,109 +41,109 @@ import BookingBullet from "./BookingBullet.vue";
 export default {
   name: "Day",
   components: {
-    BookingBullet
+    BookingBullet,
   },
   props: {
     activeMonthIndex: {
       type: Number,
-      default: 0
+      default: 0,
     },
     bookings: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     checkIn: {
       type: Date,
-      default: new Date()
+      default: new Date(),
     },
     checkIncheckOutHalfDay: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     checkInPeriod: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     checkOut: {
       type: Date,
-      default: new Date()
+      default: new Date(),
     },
     date: {
       type: Date,
-      default: new Date()
+      default: new Date(),
     },
     disableCheckoutOnCheckin: {
       type: Boolean,
-      default: false
+      default: false,
     },
     duplicateBookingDates: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     hoveringDate: {
-      type: Date
+      type: Date,
     },
     hoveringPeriod: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     hoveringTooltip: {
       default: true,
-      type: Boolean
+      type: Boolean,
     },
     i18n: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     isDesktop: {
       type: Boolean,
-      required: false
+      required: false,
     },
     isOpen: {
       type: Boolean,
-      required: true
+      required: true,
     },
     minNightCount: {
       type: Number,
-      default: 0
+      default: 0,
     },
     nextDisabledDate: {
       type: [Date, Number, String],
-      default: new Date()
+      default: new Date(),
     },
     nextPeriodDisableDates: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     options: {
-      type: Object
+      type: Object,
     },
     screenSize: {
       type: String,
-      default: ""
+      default: "",
     },
     showCustomTooltip: {
       default: false,
-      type: Boolean
+      type: Boolean,
     },
     sortedDisabledDates: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     sortedPeriodDates: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     tooltipMessage: {
       default: null,
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
       currentDate: new Date(),
       isDisabled: false,
-      isHighlighted: false
+      isHighlighted: false,
     };
   },
   computed: {
@@ -154,7 +155,7 @@ export default {
         this.duplicateBookingDates.includes(this.currentBooking.checkInDate)
       ) {
         previousBooking = this.bookings.find(
-          booking =>
+          (booking) =>
             booking.checkOutDate === this.formatDate &&
             this.duplicateBookingDates.includes(booking.checkOutDate)
         );
@@ -164,7 +165,7 @@ export default {
     },
     currentBooking() {
       return this.bookings.find(
-        booking =>
+        (booking) =>
           (this.duplicateBookingDates.includes(this.formatDate) &&
             booking.checkInDate === this.formatDate) ||
           (!this.duplicateBookingDates.includes(this.formatDate) &&
@@ -317,7 +318,7 @@ export default {
       if (this.isHighlighted && !this.isDisabled) {
         if (
           this.options.disabledDaysOfWeek.some(
-            i => i === fecha.format(this.date, "dddd")
+            (i) => i === fecha.format(this.date, "dddd")
           )
         ) {
           return "datepicker__month-day--selected datepicker__month-day--disabled afterMinimumDurationValidDay";
@@ -377,7 +378,7 @@ export default {
       if (
         this.isDisabled ||
         this.options.disabledDaysOfWeek.some(
-          i => i === fecha.format(this.date, "dddd")
+          (i) => i === fecha.format(this.date, "dddd")
         )
       ) {
         return "datepicker__month-day--disabled";
@@ -406,7 +407,7 @@ export default {
     checkinCheckoutClass() {
       let currentPeriod = null;
 
-      this.sortedPeriodDates.forEach(d => {
+      this.sortedPeriodDates.forEach((d) => {
         if (
           d.endAt !== this.formatDate &&
           (d.startAt === this.formatDate ||
@@ -423,7 +424,7 @@ export default {
       if (
         this.nextPeriodDisableDates
           ? this.nextPeriodDisableDates.some(
-              i => this.compareDay(i, this.date) === 0
+              (i) => this.compareDay(i, this.date) === 0
             )
           : null
       ) {
@@ -538,7 +539,7 @@ export default {
     },
     isToday() {
       return this.compareDay(this.currentDate, this.date) === 0;
-    }
+    },
   },
   watch: {
     hoveringDate() {
@@ -576,7 +577,7 @@ export default {
     },
     nextDisabledDate() {
       this.disableNextDays();
-    }
+    },
   },
   beforeMount() {
     this.checkIfDisabled();
@@ -604,7 +605,7 @@ export default {
       const date = new Date(currentPeriod.endAt);
       let nextPeriod = null;
 
-      this.sortedPeriodDates.forEach(period => {
+      this.sortedPeriodDates.forEach((period) => {
         const dateA = new Date(period.startAt).setHours(0, 0, 0, 0);
         const dateB = new Date(date).setHours(0, 0, 0, 0);
 
@@ -698,7 +699,7 @@ export default {
         // If this day is equal any of the disabled dates
         (this.sortedDisabledDates
           ? this.sortedDisabledDates.some(
-              i => this.compareDay(i, this.date) === 0
+              (i) => this.compareDay(i, this.date) === 0
             )
           : null) ||
         // Or is before the start date
@@ -707,7 +708,7 @@ export default {
         this.compareEndDay() ||
         // Or is in one of the disabled days of the week
         this.options.disabledDaysOfWeek.some(
-          i => i === fecha.format(this.date, "dddd")
+          (i) => i === fecha.format(this.date, "dddd")
         );
 
       // Handle checkout enabled
@@ -759,7 +760,7 @@ export default {
       ) {
         this.isDisabled = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>

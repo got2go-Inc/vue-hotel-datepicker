@@ -8,92 +8,92 @@ const periodDates = [
     startAt: "2022-08-06",
     endAt: "2022-09-10",
     periodType: "weekly_by_saturday",
-    minimumDuration: 2,
+    minimumDuration: 2
   },
   {
     startAt: "2022-09-10",
     endAt: "2022-10-01",
     periodType: "weekly_by_saturday",
-    minimumDuration: 2,
+    minimumDuration: 2
   },
   {
     startAt: "2022-10-08",
     endAt: "2022-10-22",
     periodType: "weekly_by_saturday",
-    minimumDuration: 2,
+    minimumDuration: 2
   },
   {
     startAt: "2022-10-22",
     endAt: "2022-11-26",
     periodType: "weekly_by_saturday",
-    minimumDuration: 3,
+    minimumDuration: 3
   },
   {
     startAt: "2022-12-18",
     endAt: "2023-01-01",
     periodType: "weekly_by_sunday",
-    minimumDuration: 1,
+    minimumDuration: 1
   },
   {
     startAt: "2023-01-01",
     endAt: "2023-01-05",
     periodType: "nightly",
-    minimumDuration: 3,
+    minimumDuration: 3
   },
   {
     startAt: "2023-01-05",
     endAt: "2023-01-15",
     periodType: "nightly",
-    minimumDuration: 7,
+    minimumDuration: 7
   },
   {
     startAt: "2023-01-15",
     endAt: "2023-01-29",
     periodType: "weekly_by_sunday",
-    minimumDuration: 1,
+    minimumDuration: 1
   },
   {
     startAt: "2023-01-29",
     endAt: "2023-02-26",
     periodType: "nightly",
-    minimumDuration: 10,
+    minimumDuration: 10
   },
   {
     startAt: "2023-02-26",
     endAt: "2023-03-05",
     periodType: "weekly_by_sunday",
-    minimumDuration: 1,
+    minimumDuration: 1
   },
   {
     startAt: "2023-03-11",
     endAt: "2023-04-15",
     periodType: "weekly_by_saturday",
-    minimumDuration: 3,
+    minimumDuration: 3
   },
   {
     startAt: "2023-04-16",
     endAt: "2023-05-21",
     periodType: "weekly_by_sunday",
-    minimumDuration: 1,
+    minimumDuration: 1
   },
   {
     startAt: "2023-05-21",
     endAt: "2023-05-25",
     periodType: "nightly",
-    minimumDuration: 2,
+    minimumDuration: 2
   },
   {
     startAt: "2023-05-25",
     endAt: "2023-05-28",
     periodType: "nightly",
-    minimumDuration: 3,
+    minimumDuration: 3
   },
   {
     startAt: "2023-05-28",
     endAt: "2023-06-04",
     periodType: "nightly",
-    minimumDuration: 7,
-  },
+    minimumDuration: 7
+  }
 ];
 
 const mountComponent = (
@@ -107,8 +107,8 @@ const mountComponent = (
       countOfDesktopMonth: 2,
       minNights: 3,
       periodDates,
-      startDate,
-    },
+      startDate
+    }
   });
 };
 
@@ -169,15 +169,18 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2023-01-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2023-01-03"]');
 
       await checkInDay.trigger("click");
 
-      // à tester quand le tooltip sera réglé
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(7);
+      expect(wrapper.vm.customTooltip).toBe("7 Nights minimum.");
+
       expect(wrapper.vm.dynamicNightCounts).toBe(7);
       expect(wrapper.vm.dynamicNightCounts).toBe(
         wrapper.vm.nextPeriod.minimumDurationNights
@@ -212,13 +215,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2023-01-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2023-01-13"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(7);
+      expect(wrapper.vm.customTooltip).toBe("1 week minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(7);
       expect(wrapper.vm.dynamicNightCounts).toBe(
@@ -253,13 +260,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2023-02-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2023-02-24"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(7);
+      expect(wrapper.vm.customTooltip).toBe("1 week minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(7);
       expect(wrapper.vm.dynamicNightCounts).toBe(
@@ -293,13 +304,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2022-12-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2022-12-25"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(7);
+      expect(wrapper.vm.customTooltip).toBe("1 week minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(7);
       expect(wrapper.vm.nextPeriod.minimumDuration).toBe(3);
@@ -336,13 +351,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2023-01-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2023-01-22"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(7);
+      expect(wrapper.vm.customTooltip).toBe("1 week minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(7);
       expect(wrapper.vm.nextPeriod.minimumDurationNights).toBe(10);
@@ -379,13 +398,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2022-09-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2022-09-03"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(14);
+      expect(wrapper.vm.customTooltip).toBe("2 weeks minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(14);
       expect(wrapper.vm.dynamicNightCounts).toBe(
@@ -420,13 +443,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2022-10-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2022-10-15"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(21);
+      expect(wrapper.vm.customTooltip).toBe("3 weeks minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(21);
       expect(wrapper.vm.dynamicNightCounts).toBe(
@@ -461,13 +488,17 @@ describe("Datepicker Component", () => {
           alwaysVisible: true,
           startDate: new Date("2023-03-01"),
           minNights: 3,
-          periodDates,
-        },
+          periodDates
+        }
       });
 
       const checkInDay = wrapper.get('[data-testid="day-2023-04-08"]');
 
       await checkInDay.trigger("click");
+
+      // CheckInPeriod
+      expect(wrapper.vm.checkInPeriod.minimumDurationNights).toBe(21);
+      expect(wrapper.vm.customTooltip).toBe("3 weeks minimum.");
 
       expect(wrapper.vm.dynamicNightCounts).toBe(21);
 

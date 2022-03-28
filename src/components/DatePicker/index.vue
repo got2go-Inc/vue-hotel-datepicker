@@ -985,8 +985,6 @@ export default {
       }
 
       if (this.checkIn && !this.checkOut) {
-        this.setCurrentPeriod(date, "click");
-        this.checkInPeriod = { ...this.hoveringPeriod };
         this.setCustomTooltipOnClick();
       }
 
@@ -1026,7 +1024,7 @@ export default {
           this.minNightCount - 1
         );
 
-        this.checkInPeriod.nextValidDate = nextValidDate;
+        this.$set(this.checkInPeriod, "nextValidDate", nextValidDate);
         this.showTooltipWeeklyOnClick();
       } else if (
         this.checkInPeriod.periodType === "nightly" &&
@@ -1042,7 +1040,7 @@ export default {
           this.minNightCount - 1
         );
 
-        this.checkInPeriod.nextValidDate = nextValidDate;
+        this.$set(this.checkInPeriod, "nextValidDate", nextValidDate);
         this.showTooltipNightlyOnClick();
       }
     },
@@ -1174,7 +1172,7 @@ export default {
       }
     },
     showTooltipNightlyOnClick() {
-      const minNightInPeriod = this.hoveringPeriod.minimumDuration;
+      const minNightInPeriod = this.checkInPeriod.minimumDuration;
       const night = this.pluralize(this.minNightCount);
 
       this.showCustomTooltip = true;
@@ -1395,8 +1393,6 @@ export default {
 
         const currentPeriod = getPeriod(date);
 
-        debugger;
-
         // If currentPeriod
         if (currentPeriod) {
           this.lastEnableDaysOfPeriod = this.substractDays(
@@ -1421,9 +1417,10 @@ export default {
             )
           ) {
             this.dynamicNightCounts = this.nextPeriod.minimumDurationNights;
-
+            this.checkInPeriod = { ...this.nextPeriod };
             setDisabledDays();
           } else {
+            this.checkInPeriod = { ...currentPeriod };
             this.dynamicNightCounts = currentPeriod.minimumDurationNights;
             setDisabledDays();
           }
@@ -1439,9 +1436,11 @@ export default {
 
           if (nextPeriodIsPriority({}, this.minNightCount)) {
             this.dynamicNightCounts = this.nextPeriod.minimumDurationNights;
+            this.checkInPeriod = { ...this.nextPeriod };
 
             setDisabledDays();
           } else {
+            this.checkInPeriod = { ...this.hoveringPeriod };
             this.dynamicNightCounts = 0;
           }
         }

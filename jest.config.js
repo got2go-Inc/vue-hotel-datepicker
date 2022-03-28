@@ -3,17 +3,17 @@ module.exports = {
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.js$": "babel-jest",
-    ".*\\.(vue)$": "vue-jest",
+    ".*\\.(vue)$": "vue-jest"
   },
   moduleFileExtensions: ["js", "vue"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src",
     "^~/(.*)$": "<rootDir>/src",
-    "^vue$": "vue/dist/vue.common.js",
+    "^vue$": "vue/dist/vue.common.js"
   },
   collectCoverage: true,
   collectCoverageFrom: ["<rootDir>/components/**/*.vue"],
   restoreMocks: true,
   clearMocks: true,
-  resetMocks: true,
+  resetMocks: true
 };

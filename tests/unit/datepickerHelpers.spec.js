@@ -9,8 +9,8 @@ describe("Datepicker Helpers", () => {
       attachToDocument: true,
       propsData: {
         minNights: 3,
-        disabledDates: ["2020-05-28", "2020-05-10", "2020-05-01", "2020-05-22"],
-      },
+        disabledDates: ["2020-05-28", "2020-05-10", "2020-05-01", "2020-05-22"]
+      }
     });
   });
 

@@ -4,8 +4,8 @@
       'datepicker__wrapper datepicker__wrapper',
       {
         'datepicker__wrapper--booking': bookings.length > 0,
-        datepicker__fullview: alwaysVisible
-      }
+        datepicker__fullview: alwaysVisible,
+      },
     ]"
     :ref="`DatePicker-${hash}`"
     v-if="show"
@@ -22,7 +22,7 @@
       v-if="!alwaysVisible"
       :class="[
         'datepicker__dummy-wrapper',
-        { 'datepicker__dummy-wrapper--is-active': isOpen }
+        { 'datepicker__dummy-wrapper--is-active': isOpen },
       ]"
     >
       <date-input
@@ -60,8 +60,8 @@
           'show-tooltip': isMobile && showCustomTooltip && hoveringTooltip,
           'datepicker--open': isOpen && !alwaysVisible,
           'datepicker--closed': !isOpen && !alwaysVisible,
-          'datepicker--right': positionRight
-        }
+          'datepicker--right': positionRight,
+        },
       ]"
     >
       <div v-if="isOpen && isMobile">
@@ -69,7 +69,7 @@
           @click="toggleDatepicker"
           :class="[
             'datepicker__dummy-wrapper datepicker__dummy-wrapper--no-border',
-            { 'datepicker__dummy-wrapper--is-active': isOpen }
+            { 'datepicker__dummy-wrapper--is-active': isOpen },
           ]"
         >
           <date-input
@@ -125,7 +125,7 @@
           ref="swiperWrapper"
           :class="[
             'datepicker__months',
-            { 'datepicker__months--full': showSingleMonth || alwaysVisible }
+            { 'datepicker__months--full': showSingleMonth || alwaysVisible },
           ]"
           v-if="
             isDesktop || alwaysVisible || (isMobile && isOpen && !alwaysVisible)
@@ -158,7 +158,7 @@
                 <DatePickerWeekRow
                   v-if="isDesktop || alwaysVisible"
                   :class="{
-                    'datepicker__week-row--always-visible': alwaysVisible
+                    'datepicker__week-row--always-visible': alwaysVisible,
                   }"
                   :dayNames="i18n['day-names']"
                 />
@@ -167,7 +167,7 @@
                   <div
                     :class="[
                       'square',
-                      { 'not-in-the-month': !day.belongsToThisMonth }
+                      { 'not-in-the-month': !day.belongsToThisMonth },
                     ]"
                     v-for="(day, dayIndex) in months[activeMonthIndex + month]
                       .days"
@@ -250,17 +250,17 @@ const defaulti18n = {
     "September",
     "October",
     "November",
-    "December"
+    "December",
   ],
   tooltip: {
     halfDayCheckIn: "Available CheckIn",
     halfDayCheckOut: "Available CheckOut",
     saturdayToSaturday: "Only Saturday to Saturday",
     sundayToSunday: "Only Sunday to Sunday",
-    minimumRequiredPeriod: "%{minNightInPeriod} %{night} minimum."
+    minimumRequiredPeriod: "%{minNightInPeriod} %{night} minimum.",
   },
   week: "week",
-  weeks: "weeks"
+  weeks: "weeks",
 };
 
 export default {
@@ -268,142 +268,142 @@ export default {
   components: {
     DateInput,
     DatePickerWeekRow,
-    Day
+    Day,
   },
   props: {
     alwaysVisible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     bookings: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     clickOutsideElementId: {
       type: String,
-      default: ""
+      default: "",
     },
     closeDatepickerOnClickOutside: {
       type: Boolean,
-      default: true
+      default: true,
     },
     countOfDesktopMonth: {
       type: Number,
-      default: 2
+      default: 2,
     },
     countOfMobileMonth: {
       type: Number,
-      default: 8
+      default: 8,
     },
     countOfTotalMonthByDefault: {
       type: Number,
-      default: 12
+      default: 12,
     },
     disabledDates: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     disabledDaysOfWeek: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     displayClearButton: {
       type: Boolean,
-      default: true
+      default: true,
     },
     disableCheckoutOnCheckin: {
       type: Boolean,
-      default: false
+      default: false,
     },
     enableCheckout: {
       type: Boolean,
-      default: false
+      default: false,
     },
     endDate: {
       type: [Date, String, Number],
-      default: Infinity
+      default: Infinity,
     },
     endingDateValue: {
       type: Date,
-      default: null
+      default: null,
     },
     firstDayOfWeek: {
       type: Number,
-      default: 0
+      default: 0,
     },
     format: {
       type: String,
-      default: "YYYY-MM-DD"
+      default: "YYYY-MM-DD",
     },
     halfDay: {
       type: Boolean,
-      default: true
+      default: true,
     },
     hoveringTooltip: {
       default: true,
-      type: [Boolean, Function]
+      type: [Boolean, Function],
     },
     i18n: {
       type: Object,
-      default: () => defaulti18n
+      default: () => defaulti18n,
     },
     lastDateAvailable: {
       type: [Number, Date],
-      default: Infinity
+      default: Infinity,
     },
     maxNights: {
       type: Number,
-      default: null
+      default: null,
     },
     minNights: {
       type: Number,
-      default: 1
+      default: 1,
     },
     periodDates: {
       type: Array,
       default() {
         return [];
-      }
+      },
     },
     positionRight: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showSingleMonth: {
       type: Boolean,
-      default: false
+      default: false,
     },
     showYear: {
       type: Boolean,
-      default: false
+      default: false,
     },
     singleDaySelection: {
       type: Boolean,
-      default: false
+      default: false,
     },
     startDate: {
       type: [Date, String],
       default() {
         return new Date();
-      }
+      },
     },
     startingDateValue: {
       type: Date,
-      default: null
+      default: null,
     },
     tooltipMessage: {
       type: String,
-      default: null
+      default: null,
     },
     value: {
-      type: String
-    }
+      type: String,
+    },
   },
   data() {
     return {
@@ -429,7 +429,7 @@ export default {
       screenSize: null,
       show: true,
       showCustomTooltip: false,
-      sortedDisabledDates: null
+      sortedDisabledDates: null,
     };
   },
   computed: {
@@ -462,14 +462,14 @@ export default {
     },
     duplicateBookingDates() {
       return this.baseHalfDayDates.filter(
-        (newArr => date => newArr.has(date) || !newArr.add(date))(new Set())
+        ((newArr) => (date) => newArr.has(date) || !newArr.add(date))(new Set())
       );
     },
     baseHalfDayDates() {
       if (this.sortBookings.length > 0) {
-        const bookings = this.sortBookings.map(x => [
+        const bookings = this.sortBookings.map((x) => [
           x.checkInDate,
-          x.checkOutDate
+          x.checkOutDate,
         ]);
 
         return bookings.reduce((a, b) => {
@@ -536,14 +536,14 @@ export default {
             // eslint-disable-next-line no-nested-ternary
             return aa < bb ? -1 : aa > bb ? 1 : 0;
           })
-          .map(period => {
+          .map((period) => {
             const minimumDurationNights = period.periodType.includes("weekly")
               ? period.minimumDuration * 7
               : period.minimumDuration;
 
             return {
               ...period,
-              minimumDurationNights
+              minimumDurationNights,
             };
           });
       }
@@ -572,7 +572,7 @@ export default {
       return Boolean(
         (this.checkIn || this.checkOut) && this.displayClearButton
       );
-    }
+    },
   },
   watch: {
     bookings() {
@@ -624,7 +624,7 @@ export default {
       }
 
       this.$emit("check-out-changed", newDate);
-    }
+    },
   },
   created() {
     if (
@@ -652,7 +652,7 @@ export default {
             D % 10 > 3 ? 0 : ((D - (D % 10) !== 10) * D) % 10
           ]
         );
-      }
+      },
     };
   },
   mounted() {
@@ -756,7 +756,7 @@ export default {
       const firstDay = this.getFirstDay(date, this.firstDayOfWeek);
       const month = {
         monthName: this.getMonthName(firstDayOfMonth),
-        days: []
+        days: [],
       };
 
       for (let i = 0; i < 42; i++) {
@@ -764,7 +764,7 @@ export default {
 
         month.days.push({
           date: day,
-          belongsToThisMonth: day.getMonth() === date.getMonth()
+          belongsToThisMonth: day.getMonth() === date.getMonth(),
         });
       }
 
@@ -779,7 +779,7 @@ export default {
         const firstDay = this.getFirstDay(currentDate, this.firstDayOfWeek);
         const month = {
           monthName: this.getMonthName(firstDayOfMonth),
-          days: []
+          days: [],
         };
 
         for (let i = 0; i < 42; i++) {
@@ -787,7 +787,7 @@ export default {
 
           month.days.push({
             date: day,
-            belongsToThisMonth: day.getMonth() === currentDate.getMonth()
+            belongsToThisMonth: day.getMonth() === currentDate.getMonth(),
           });
         }
 
@@ -817,7 +817,7 @@ export default {
       const compareDate = this.dateFormater(date);
       let currentPeriod = null;
 
-      this.sortedPeriodDates.forEach(d => {
+      this.sortedPeriodDates.forEach((d) => {
         if (
           d.endAt !== compareDate &&
           (d.startAt === compareDate ||
@@ -854,7 +854,7 @@ export default {
         const formatDate = this.dateFormater(day.date);
         const halfDays = Object.keys(this.checkIncheckOutHalfDay);
         const disableDays = this.disabledDates
-          .filter(disableDate => !halfDays.includes(disableDate))
+          .filter((disableDate) => !halfDays.includes(disableDate))
           .includes(formatDate);
 
         if (!this.dayIsDisabled(day.date) && !disableDays) {
@@ -866,7 +866,7 @@ export default {
       let currentPeriod = {};
 
       if (this.sortedPeriodDates.length > 0) {
-        this.sortedPeriodDates.forEach(d => {
+        this.sortedPeriodDates.forEach((d) => {
           if (
             eventType === "click" &&
             (d.startAt === this.dateFormater(date) ||
@@ -890,14 +890,14 @@ export default {
             periodType: "nightly",
             minimumDuration: this.minNightCount,
             startAt: this.checkIn,
-            endAt: this.addDays(this.checkIn, this.minNightCount)
+            endAt: this.addDays(this.checkIn, this.minNightCount),
           };
         } else {
           this.hoveringPeriod = {
             periodType: "nightly",
             minimumDuration: this.minNightCount,
             startAt: this.checkIn,
-            endAt: this.addDays(this.checkIn, this.minNightCount)
+            endAt: this.addDays(this.checkIn, this.minNightCount),
           };
         }
       } else if (this.minNightCount > 0) {
@@ -905,7 +905,7 @@ export default {
           periodType: "nightly",
           minimumDuration: this.minNightCount,
           startAt: this.checkIn,
-          endAt: this.addDays(this.checkIn, this.minNightCount)
+          endAt: this.addDays(this.checkIn, this.minNightCount),
         };
       }
     },
@@ -999,7 +999,7 @@ export default {
       if (this.sortBookings.length > 0) {
         const nextDateFormated = this.dateFormater(this.addDays(date, 1));
         const nextBooking = this.sortBookings.find(
-          booking =>
+          (booking) =>
             this.validateDateBetweenDate(
               booking.checkInDate,
               nextDateFormated
@@ -1212,7 +1212,7 @@ export default {
       let newT = translation;
       const keysTranslations = Object.keys(keys);
 
-      keysTranslations.forEach(key => {
+      keysTranslations.forEach((key) => {
         newT = newT.replace(`%{${key}}`, keys[key]);
       });
 
@@ -1372,11 +1372,11 @@ export default {
           this.nextPeriodDisableDates = newDisablesDates;
         };
 
-        const getPeriod = currentDate => {
+        const getPeriod = (currentDate) => {
           const compareDate = this.dateFormater(currentDate);
           let day = null;
 
-          this.sortedPeriodDates.forEach(d => {
+          this.sortedPeriodDates.forEach((d) => {
             if (
               d.endAt !== compareDate &&
               (d.startAt === compareDate ||
@@ -1395,6 +1395,8 @@ export default {
 
         const currentPeriod = getPeriod(date);
 
+        debugger;
+
         // If currentPeriod
         if (currentPeriod) {
           this.lastEnableDaysOfPeriod = this.substractDays(
@@ -1403,7 +1405,7 @@ export default {
           );
 
           const currentPeriodIndex = this.sortedPeriodDates.findIndex(
-            p => p.startAt === currentPeriod.startAt
+            (p) => p.startAt === currentPeriod.startAt
           );
 
           if (this.sortedPeriodDates.length > currentPeriodIndex) {
@@ -1465,11 +1467,11 @@ export default {
 
       if (this.isMobile) {
         firstDayOfLastMonth = this.months[this.months.length - 1].days.find(
-          day => day.belongsToThisMonth === true
+          (day) => day.belongsToThisMonth === true
         );
       } else {
         firstDayOfLastMonth = this.months[this.activeMonthIndex + 1].days.find(
-          day => day.belongsToThisMonth === true
+          (day) => day.belongsToThisMonth === true
         );
       }
 
@@ -1523,7 +1525,7 @@ export default {
 
             if (i === 0) {
               checkIncheckOutHalfDay[newDate] = {
-                checkIn: true
+                checkIn: true,
               };
             }
 
@@ -1533,10 +1535,10 @@ export default {
               this.getDayDiff(newDate, newDateIncrementOne) > 1
             ) {
               checkIncheckOutHalfDay[newDate] = {
-                checkOut: true
+                checkOut: true,
               };
               checkIncheckOutHalfDay[newDateIncrementOne] = {
-                checkIn: true
+                checkIn: true,
               };
             }
 
@@ -1544,7 +1546,7 @@ export default {
               checkIncheckOutHalfDay[
                 newBaseHalfDayDates[newBaseHalfDayDates.length - 1]
               ] = {
-                checkOut: true
+                checkOut: true,
               };
             }
           }
@@ -1552,12 +1554,12 @@ export default {
           sortedDates[i] = newBaseHalfDayDates[i];
         }
       } else {
-        this.sortBookings.forEach(booking => {
+        this.sortBookings.forEach((booking) => {
           checkIncheckOutHalfDay[booking.checkInDate] = {
-            checkIn: true
+            checkIn: true,
           };
           checkIncheckOutHalfDay[booking.checkOutDate] = {
-            checkOut: true
+            checkOut: true,
           };
         });
       }
@@ -1565,15 +1567,15 @@ export default {
       if (this.halfDay) {
         const halfDays = Object.keys(checkIncheckOutHalfDay);
 
-        sortedDates = sortedDates.filter(date => !halfDays.includes(date));
+        sortedDates = sortedDates.filter((date) => !halfDays.includes(date));
       }
 
-      sortedDates = sortedDates.map(date => new Date(date));
+      sortedDates = sortedDates.map((date) => new Date(date));
       this.sortedDisabledDates = sortedDates.sort((a, b) => a - b);
       this.checkIncheckOutHalfDay = checkIncheckOutHalfDay;
       this.$emit("handleCheckIncheckOutHalfDay", this.checkIncheckOutHalfDay);
-    }
-  }
+    },
+  },
 };
 </script>
 

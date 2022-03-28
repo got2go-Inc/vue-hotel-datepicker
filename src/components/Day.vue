@@ -328,10 +328,10 @@ export default {
           Object.keys(this.checkInPeriod).length > 0 &&
           this.checkInPeriod.periodType.includes("weekly") &&
           this.hoveringDate &&
-          ((this.checkInPeriod.periodType === "weekly_by_saturday" &&
-            this.hoveringDate.getDay() === 6) ||
-            (this.checkInPeriod.periodType === "weekly_by_sunday" &&
-              this.hoveringDate.getDay() === 0)) &&
+          // ((this.checkInPeriod.periodType === "weekly_by_saturday" &&
+          //   this.hoveringDate.getDay() === 6) ||
+          //   (this.checkInPeriod.periodType === "weekly_by_sunday" &&
+          //     this.hoveringDate.getDay() === 0)) &&
           this.isDateBefore(this.date, this.hoveringDate)
         ) {
           // If currentPeriod has a minimumDuration 1
